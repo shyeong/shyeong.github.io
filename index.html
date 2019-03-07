@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Visitor Management</title>
+  <meta name="author" content="Jake Rocheleau">
+<!--   <link rel="shortcut icon" href="http://static02.hongkiat.com/logo/hkdc/favicon.ico">
+  <link rel="icon" href="http://static02.hongkiat.com/logo/hkdc/favicon.ico"> -->
+  <link rel="stylesheet" type="text/css" media="all" href="css/style.css">
+  <link rel="stylesheet" type="text/css" media="all" href="css/responsive.css">
+  <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<scrip -->t src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
+	
+	 <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+<script src="js/qr_packed.js"></script 
+</head>
+
+<body>
+
+	<section id="container">
+		<!-- <span class="chyron"><em><a href="http://www.hongkiat.com/blog/">&laquo; back to the site</a></em></span> -->
+		<h2>Registration</h2>
+		<form name="hongkiat" id="hongkiat-form" method="post" action="#">
+		<div id="wrapping" class="clearfix">
+			<section id="aligned">
+			<input type="text" name="houseID" id="houseID" placeholder="Jalan & House no." autocomplete="off" tabindex="1" class="txtinput">
+			<input type="text" name="visitorType" id="visitorType" placeholder="Visitor Type" autocomplete="off" tabindex="2" class="txtinput">
+		
+			
+			<div class="file-upload" tabindex="3">
+			  <div class="file-select">
+				<div class="file-select-button-license" id="fileName"> &nbsp &nbsp &nbsp </div> 
+				<div class="file-select-name-license" id="noFile">Take license photo</div> 
+				<input type="file" name="chooseFile" id="chooseFile" accept="image/*" capture="environment" >
+			  </div>
+			</div>
+			
+			<br>
+			<div class="file-upload" tabindex="4">
+			  <div class="file-select">
+				<div class="file-select-button-car" id="fileName-car"> &nbsp &nbsp &nbsp </div> 
+				<div class="file-select-name-car" id="noFile-car">Take car photo</div> 
+				<input type="file" name="chooseFile-car" id="chooseFile-car" accept="image/*" capture="environment" >
+			  </div>
+			</div>
+			
+
+			<br>
+			<div class="file-upload" tabindex="-1">
+			  <div class="file-select">
+				<div class="file-select-button-qr" id="fileName-qr"> &nbsp &nbsp &nbsp </div> 
+				<!-- <div class="file-select-name-qr" id="noFile-qr">Scan pass QR</div>  -->
+				<input type="text" id="noFile-qr"  class="file-select-name-qr" style="border:none" placeholder="Scan pass QR"> <!-- class="qrcode-text">-->
+				<label class="qrcode-text-btn1">
+				<input type="file" name="chooseFile-qr" id="chooseFile-qr" accept="image/*" capture="environment"   onchange="openQRCamera(this);" tabindex=-1>
+			</label>
+			  </div>
+			</div>
+			
+			
+<!-- <label class="qrcode-text-btn1">
+<input type="file"  accept="image/*" capture="environment" onchange="openQRCamera(this);" tabindex=-1>
+
+</label>  -->
+<!-- <input type=button value="Go" disabled> -->
+			
+			<!-- <input type="email" name="email" id="email" placeholder="Your e-mail address" autocomplete="off" tabindex="2" class="txtinput">
+		
+			<input type="url" name="website" id="website" placeholder="Website URL" autocomplete="off" tabindex="3" class="txtinput">
+		
+			<input type="tel" name="telephone" id="telephone" placeholder="Phone number?(optional)" tabindex="4" class="txtinput">
+		
+			<textarea name="message" id="message" placeholder="Enter a cool message..." tabindex="5" class="txtblock"></textarea>
+			</section> -->
+			
+			<!-- <section id="aside" class="clearfix">
+				<section id="recipientcase">
+				<h3>Recipient:</h3>
+					<select id="recipient" name="recipient" tabindex="6" class="selmenu">
+  						<option value="staff">Site Staff</option>
+  						<option value="editor">Editor-in-Chief</option>
+  						<option value="technical">Tech Department</option>
+  						<option value="pr">Public Relations</option>
+  						<option value="support">General Support</option>
+					</select>
+				</section>
+				
+				<section id="prioritycase">
+					<h3>Priority:</h3>
+					<span class="radiobadge">
+						<input type="radio" id="low" name="priority" value="low">
+						<label for="low">Low</label>
+					</span>
+				
+					<span class="radiobadge">
+						<input type="radio" id="med" name="priority" value="med" checked="checked">
+						<label for="med">Medium</label>
+					</span>
+				
+					<span class="radiobadge">
+						<input type="radio" id="high" name="priority" value="high">
+						<label for="high">High</label>
+					</span>
+				</section>
+			</section> -->
+		</div>
+
+
+		<section id="buttons">
+			<input type="reset" name="reset" id="resetbtn" class="resetbtn" value="Reset">
+			<input type="submit" name="submit" id="submitbtn" class="submitbtn" tabindex="7" value="Submit this!">
+			<br style="clear:both;">
+		</section>
+		</form>
+	</section>
+	
+				<script  src="js/index.js"></script>
+				
+				
+			<script>
+			function openQRCamera(node) {
+			  var reader = new FileReader();
+			  reader.onload = function() {
+				node.value = "";
+				qrcode.callback = function(res) {
+				   if(res instanceof Error) {
+					//alert("No QR code found. Please make sure the QR code is within the camera's frame and try again.");
+					node.parentNode.previousElementSibling.value = "Failed to read QR. Try again";
+				  } else {
+					node.parentNode.previousElementSibling.value = res;
+					
+				  }  
+				};
+				qrcode.decode(reader.result);
+			  };
+			  reader.readAsDataURL(node.files[0]);
+				
+			}
+
+			function showQRIntro() {
+			  return confirm("Use your camera to take a picture of a QR code.");
+			}
+
+
+			</script>
+</body>
+</html>
